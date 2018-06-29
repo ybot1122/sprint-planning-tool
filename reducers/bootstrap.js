@@ -2,6 +2,7 @@ import * as ACTION from '../constants/actionTypes'
 // Reducer for the bootstrap of the app.
 
 const initialState = {
+  showCards: false,
   localUser: {
     id: 0,
   },
@@ -28,7 +29,10 @@ const initialState = {
 const bootstrap = (state = initialState, action) => {
   switch (action.type) {
     case ACTION.UPDATE_SCORE:
-      state.users[action.playerId].score = action.score;
+      state.users[action.playerId].score = action.score
+      return Object.assign({}, state)
+    case ACTION.TOGGLE_SHOW_CARDS:
+      state.showCards = !state.showCards
       return Object.assign({}, state)
     default:
       return state

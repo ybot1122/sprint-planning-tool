@@ -7,3 +7,9 @@ export const updateScore = (playerId, score) => {
     score,
   }
 }
+
+export const toggleShowCards = () => {
+  return {
+    type: ACTION.TOGGLE_SHOW_CARDS,
+  }
+}

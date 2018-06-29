@@ -1,11 +1,15 @@
+import { connect } from 'react-redux'
+
 import * as proptypes from 'prop-types'
 import { COFFEE, QUESTION, UNDECIDED } from '../constants/scores'
 
 const TeammateCard = (props) => {
-  const { score, name } = props
+  const { score, name, bootstrap: { showCards } } = props
 
   let scoreDisplay = <h4>{score}</h4>;
-  if (score === QUESTION) {
+  if (!showCards) {
+    scoreDisplay = <h4>-</h4>
+  } else if (score === QUESTION) {
     scoreDisplay = <h4>?</h4>
   } else if (score === UNDECIDED) {
     scoreDisplay = <h4>-</h4>
@@ -47,4 +51,4 @@ TeammateCard.propTypes = {
   score: proptypes.number,
 }
 
-export default TeammateCard
+export default connect(state => state)(TeammateCard)
