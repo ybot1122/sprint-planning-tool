@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import * as proptypes from 'prop-types'
 
 import { updateScore } from '../actions/actions'
-import { COFFEE, QUESTION } from '../constants/scores'
+import { COFFEE, QUESTION, UNDECIDED } from '../constants/scores'
 
 const scoreValueStyle = {
   margin: 0,
@@ -13,6 +13,7 @@ const ScoreCard = (props) => {
   console.log('ScoreCard:', props);
   const { bootstrap: { localUser: { id }, users }, score, dispatch } = props
   const currentScore = users[id].score
+  const isSelected = currentScore === score
 
   let scoreDisplay = <h4 style={scoreValueStyle}>{score}</h4>;
   if (score === QUESTION) {
@@ -21,9 +22,9 @@ const ScoreCard = (props) => {
     scoreDisplay = <h4 style={scoreValueStyle}><img src="/static/coffee.png" style={{height: '20px'}} /></h4>
   }
 
-  const cname = (currentScore === score) ? 'score-card--outer score-value-active' : 'score-card--outer'
+  const cname = (isSelected) ? 'score-card--outer score-value-active' : 'score-card--outer'
   return (
-    <div className={cname} onClick={() => dispatch(updateScore(id, score))}>
+    <div className={cname} onClick={() => isSelected ? dispatch(updateScore(id, UNDECIDED)) : dispatch(updateScore(id, score))}>
       <div className="score-card--inner">
         {scoreDisplay}
       </div>
