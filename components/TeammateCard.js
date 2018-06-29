@@ -9,6 +9,7 @@ const TeammateCard = (props) => (
 
     <style jsx>{`
       .teammate-card--outer {
+        display: inline-block;
         width: 150px;
         margin: 10px;
         background: silver;
@@ -18,10 +19,6 @@ const TeammateCard = (props) => (
       .teammate-card--inner {
         margin: 3px;
         text-align: center;
-        width: 100%;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
       }
 
       h4 {

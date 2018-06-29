@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Link from 'next/link';
 import MyLayout from '../components/MyLayout';
 import TeammateCard from '../components/TeammateCard';
+import ScoreCard from '../components/ScoreCard';
 
 const index = (props) => {
   console.log('Home Page', props)
@@ -16,7 +17,15 @@ const index = (props) => {
           <TeammateCard name="This Pers" score={1} />
         </div>
         <div className="point-cards">
-
+          <ScoreCard score={1} />
+          <ScoreCard score={2} />
+          <ScoreCard score={3} />
+          <ScoreCard score={5} />
+          <ScoreCard score={8} />
+          <ScoreCard score={13} />
+          <ScoreCard score={21} />
+          <ScoreCard score={100} />
+          <ScoreCard score={1000} />
         </div>
       </div>
 
@@ -34,13 +43,11 @@ const index = (props) => {
         .point-cards {
           margin: 0;
           width: 100%;
-          height: 200px;
+          height: 100px;
           background: light-blue;
         }
-        .teammate-cards {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
+        .teammate-cards, .point-cards {
+          text-align: center;
         }
       `}</style>
     </div>
