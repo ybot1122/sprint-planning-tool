@@ -12,7 +12,7 @@ const TeammateCard = (props) => (
         display: inline-block;
         width: 150px;
         margin: 10px;
-        background: silver;
+        background: #ABCAE9;
         position: relative;
       }
 

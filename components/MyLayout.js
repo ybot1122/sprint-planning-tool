@@ -15,6 +15,12 @@ const MyLayout = (Page) => {
               <Head title="Home" />
               <Nav />
               <Page />
+  
+              <style jsx global>{`
+                body {
+                  color: #505759;
+                }
+              `}</style>  
             </div>
           </Provider>
         );

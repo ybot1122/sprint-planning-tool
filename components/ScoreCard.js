@@ -22,7 +22,7 @@ const ScoreCard = (props) => {
           display: inline-block;
           width: 50px;
           margin: 10px;
-          background: silver;
+          background: #ABCAE9;
         }
 
         .score-card--inner {
