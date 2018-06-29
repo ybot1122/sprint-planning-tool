@@ -1,14 +1,18 @@
 import * as proptypes from 'prop-types'
 
 const question = 100
+const scoreValueStyle = {
+  margin: 0,
+  padding: 0
+}
 const coffee = 1000
 
 const ScoreCard = (props) => {
-  let scoreDisplay = <h4>{props.score}</h4>;
+  let scoreDisplay = <h4 className="score-value" style={scoreValueStyle}>{props.score}</h4>;
   if (props.score === question) {
-    scoreDisplay = <h3>?</h3>
+    scoreDisplay = <h4 className="score-value" style={scoreValueStyle}>?</h4>
   } else if (props.score === coffee) {
-    scoreDisplay = <h3>Coffee</h3>
+    scoreDisplay = <h4 style={scoreValueStyle}><img src="/static/coffee.png" className="coffee" style={{height: '20px'}} /></h4>
   }
 
   return (
@@ -20,13 +24,15 @@ const ScoreCard = (props) => {
       <style jsx>{`
         .score-card--outer {
           display: inline-block;
+          margin: 0 5px;
+          height: 40px;
           width: 50px;
-          margin: 10px;
+          line-height: 40px;
           background: #ABCAE9;
         }
 
         .score-card--inner {
-          margin: 3px;
+          margin: 3px;          
           text-align: center;
         }
       `}</style>

@@ -41,7 +41,7 @@ const index = (props) => {
           background: #0033A0;
         }
         .point-cards {
-          margin: 0;
+          margin: 20px 0;
           width: 100%;
           height: 100px;
           background: light-blue;
