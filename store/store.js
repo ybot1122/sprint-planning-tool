@@ -18,6 +18,6 @@ const enhancer = compose(
 
 const store = createStore(reducers, [initialState])
 
-console.log(store.getState())
+console.log('Store Initialized: ', store.getState())
 
 export default store
