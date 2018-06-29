@@ -1,4 +1,6 @@
-import React from 'react';
+import React from 'react'
+import { Provider } from 'react-redux'
+import store from '../store/store'
 
 import Head from './head'
 import Nav from './nav'
@@ -8,15 +10,17 @@ const MyLayout = (Page) => {
     class MyLayout extends React.Component {
       render () {
         return (
-          <div>
-            <Head title="Home" />
-            <Nav />
-            <Page />
-          </div>
+          <Provider store={store}>
+            <div>
+              <Head title="Home" />
+              <Nav />
+              <Page />
+            </div>
+          </Provider>
         );
       }
     ;}
   );
 }
 
-export default MyLayout;
+export default MyLayout
