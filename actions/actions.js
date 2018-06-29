@@ -8,6 +8,14 @@ export const updateScore = (playerId, score) => {
   }
 }
 
+export const updateName = (playerId, name) => {
+  return {
+    type: ACTION.UPDATE_NAME,
+    playerId,
+    name,
+  }
+}
+
 export const toggleShowCards = () => {
   return {
     type: ACTION.TOGGLE_SHOW_CARDS,

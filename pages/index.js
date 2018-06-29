@@ -10,7 +10,7 @@ const index = (props) => {
 
   const { bootstrap: { users } } = props;
 
-  const teammateCards = users.map((el, ind) => <TeammateCard name={el.name} score={el.score} key={ind} />);
+  const teammateCards = users.map((el, ind) => <TeammateCard name={el.name} score={el.score} id={ind} key={ind} />);
 
   return (
     <div>

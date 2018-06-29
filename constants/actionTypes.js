@@ -1,2 +1,3 @@
 export const UPDATE_SCORE = 'UPDATE_SCORE';
 export const TOGGLE_SHOW_CARDS = 'TOGGLE_SHOW_CARDS';
+export const UPDATE_NAME = 'UPDATE_NAME';

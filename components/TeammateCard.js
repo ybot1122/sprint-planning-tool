@@ -1,14 +1,16 @@
 import { connect } from 'react-redux'
-
+import EditableName from './EditableName'
 import * as proptypes from 'prop-types'
 import { COFFEE, QUESTION, UNDECIDED } from '../constants/scores'
 
+
 const TeammateCard = (props) => {
-  const { score, name, bootstrap: { showCards } } = props
+  const { score, name, id, bootstrap: { showCards, localUser } } = props
+  const isLocalUser = id == localUser.id
 
   let scoreDisplay = <h4>{score}</h4>;
   if (!showCards) {
-    scoreDisplay = <h4>-</h4>
+    scoreDisplay = <h4></h4>
   } else if (score === QUESTION) {
     scoreDisplay = <h4>?</h4>
   } else if (score === UNDECIDED) {
@@ -20,7 +22,7 @@ const TeammateCard = (props) => {
   return (
     <div className="teammate-card--outer">
       <div className="teammate-card--inner">
-        <h3>{name}</h3>
+        {isLocalUser ? <h3><EditableName /></h3> : <h3>{name}</h3>}
         <h4>{scoreDisplay}</h4>
       </div>
 
@@ -38,7 +40,15 @@ const TeammateCard = (props) => {
           text-align: center;
         }
 
+        h3 {
+          height: 21px;
+          line-height: 21px;
+          font-size: 21px;
+        }
+
         h4 {
+          height: 35px;
+          line-height: 35px;
           font-size: 35px;
         }
       `}</style>
@@ -49,6 +59,7 @@ const TeammateCard = (props) => {
 TeammateCard.propTypes = {
   name: proptypes.string,
   score: proptypes.number,
+  id: proptypes.number,
 }
 
 export default connect(state => state)(TeammateCard)

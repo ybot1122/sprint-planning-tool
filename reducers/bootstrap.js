@@ -34,6 +34,9 @@ const bootstrap = (state = initialState, action) => {
     case ACTION.TOGGLE_SHOW_CARDS:
       state.showCards = !state.showCards
       return Object.assign({}, state)
+    case ACTION.UPDATE_NAME:
+      state.users[action.playerId].name = action.name
+      return Object.assign({}, state)
     default:
       return state
   }
