@@ -8,15 +8,15 @@ const TeammateCard = (props) => {
   const { score, name, id, bootstrap: { showCards, localUser } } = props
   const isLocalUser = id == localUser.id
 
-  let scoreDisplay = <h4>{score}</h4>;
+  let scoreDisplay = {score};
   if (!showCards) {
-    scoreDisplay = <h4></h4>
+    scoreDisplay = ''
   } else if (score === QUESTION) {
-    scoreDisplay = <h4>?</h4>
+    scoreDisplay = '?'
   } else if (score === UNDECIDED) {
-    scoreDisplay = <h4>-</h4>
+    scoreDisplay = '-'
   } else if (score === COFFEE) {
-    scoreDisplay = <h4><img src="/static/coffee.png" style={{height: '20px'}} /></h4>
+    scoreDisplay = <img src="/static/coffee.png" style={{height: '20px'}} />
   }
 
   return (

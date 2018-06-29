@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 
-import Head from './head'
 import Link from 'next/link'
 import { HOME, ABOUT } from '../constants/routes';
 import { toggleShowCards } from '../actions/actions'

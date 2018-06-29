@@ -1,9 +1,13 @@
 import React from 'react'
+import openSocket from 'socket.io-client';
+
 import { Provider } from 'react-redux'
 import store from '../store/store'
 
-import Head from './head'
-import Nav from './nav'
+import Head from './Head'
+import Nav from './Nav'
+
+const socket = openSocket('http://localhost:4200');
 
 const MyLayout = (Page) => {
   return (

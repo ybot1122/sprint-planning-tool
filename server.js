@@ -5,6 +5,11 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+const socketApp = express()
+const socketServer = require('http').createServer(socketApp)
+const io = require('socket.io')(socketServer)
+
+// nextjs backend
 app.prepare()
 .then(() => {
   const server = express()
@@ -22,3 +27,13 @@ app.prepare()
   console.error(ex.stack)
   process.exit(1)
 })
+
+// socket.io backend
+io.on('connection', function(client) {  
+  console.log('Client connected...')
+
+  client.on('join', function(data) {
+    console.log(data)
+  })
+})
+socketServer.listen(4200)
