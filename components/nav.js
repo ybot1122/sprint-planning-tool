@@ -1,8 +1,10 @@
 import Head from './head'
 import Link from 'next/link'
+import { HOME, ABOUT } from '../constants/routes';
 
 const links = [
-  { href: 'https://github.com/segmentio/create-next-app', label: 'Github' }
+  { href: 'https://github.com/segmentio/create-next-app', label: 'Github' },
+  { href: ABOUT, label: 'About' }
 ].map(link => {
   link.key = `nav-link-${link.href}-${link.label}`
   return link
@@ -12,7 +14,7 @@ const Nav = () => (
   <nav>
     <ul>
       <li>
-        <Link prefetch href="/">
+        <Link prefetch href={HOME}>
           <a>Home</a>
         </Link>
       </li>
