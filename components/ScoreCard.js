@@ -1,22 +1,29 @@
+import { connect } from 'react-redux'
 import * as proptypes from 'prop-types'
 
-const question = 100
+import { updateScore } from '../actions/actions'
+import { COFFEE, QUESTION } from '../constants/scores'
+
 const scoreValueStyle = {
   margin: 0,
   padding: 0
 }
-const coffee = 1000
 
 const ScoreCard = (props) => {
-  let scoreDisplay = <h4 className="score-value" style={scoreValueStyle}>{props.score}</h4>;
-  if (props.score === question) {
-    scoreDisplay = <h4 className="score-value" style={scoreValueStyle}>?</h4>
-  } else if (props.score === coffee) {
-    scoreDisplay = <h4 style={scoreValueStyle}><img src="/static/coffee.png" className="coffee" style={{height: '20px'}} /></h4>
+  console.log('ScoreCard:', props);
+  const { bootstrap: { localUser: { id }, users }, score, dispatch } = props
+  const currentScore = users[id].score
+
+  let scoreDisplay = <h4 style={scoreValueStyle}>{score}</h4>;
+  if (score === QUESTION) {
+    scoreDisplay = <h4 style={scoreValueStyle}>?</h4>
+  } else if (score === COFFEE) {
+    scoreDisplay = <h4 style={scoreValueStyle}><img src="/static/coffee.png" style={{height: '20px'}} /></h4>
   }
 
+  const cname = (currentScore === score) ? 'score-card--outer score-value-active' : 'score-card--outer'
   return (
-    <div className="score-card--outer">
+    <div className={cname} onClick={() => dispatch(updateScore(id, score))}>
       <div className="score-card--inner">
         {scoreDisplay}
       </div>
@@ -32,7 +39,7 @@ const ScoreCard = (props) => {
           border: 2px white solid;
         }
 
-        .score-card--outer:hover {
+        .score-card--outer:hover, .score-value-active {
           border: 2px black solid;
           cursor: pointer;
         }
@@ -47,7 +54,7 @@ const ScoreCard = (props) => {
 }
 
 ScoreCard.propTypes = {
-  score: proptypes.number,
+  score: proptypes.number.isRequired,
 }
 
-export default ScoreCard
+export default connect(state => state)(ScoreCard)
