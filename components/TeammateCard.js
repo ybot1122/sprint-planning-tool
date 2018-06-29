@@ -4,7 +4,7 @@ const TeammateCard = (props) => (
   <div className="teammate-card--outer">
     <div className="teammate-card--inner">
       <h3>{props.name}</h3>
-      <h4>{props.score}</h4>
+      <h4>{props.score === null ? '-' : props.score}</h4>
     </div>
 
     <style jsx>{`

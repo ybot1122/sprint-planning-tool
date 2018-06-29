@@ -29,6 +29,12 @@ const ScoreCard = (props) => {
           width: 50px;
           line-height: 40px;
           background: #ABCAE9;
+          border: 2px white solid;
+        }
+
+        .score-card--outer:hover {
+          border: 2px black solid;
+          cursor: pointer;
         }
 
         .score-card--inner {

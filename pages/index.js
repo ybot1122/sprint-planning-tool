@@ -7,14 +7,16 @@ import ScoreCard from '../components/ScoreCard';
 
 const index = (props) => {
   console.log('Home Page', props)
+  
+  const { bootstrap: { users } } = props;
+
+  const teammateCards = users.map((el) => <TeammateCard name={el.name} score={el.score} />);
+
   return (
     <div>
       <div className="hero">
         <div className="teammate-cards">
-          <TeammateCard name="Toby" score={3} />
-          <TeammateCard name="Someone" score={3} />
-          <TeammateCard name="Other G" score={2} />
-          <TeammateCard name="This Pers" score={1} />
+          {teammateCards}
         </div>
         <div className="point-cards">
           <ScoreCard score={1} />
