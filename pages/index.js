@@ -10,10 +10,10 @@ const index = (props) => {
     <div>
       <div className="hero">
         <div className="teammate-cards">
-          <TeammateCard />
-          <TeammateCard />
-          <TeammateCard />
-          <TeammateCard />
+          <TeammateCard name="Toby" score={3} />
+          <TeammateCard name="Someone" score={3} />
+          <TeammateCard name="Other G" score={2} />
+          <TeammateCard name="This Pers" score={1} />
         </div>
         <div className="point-cards">
 

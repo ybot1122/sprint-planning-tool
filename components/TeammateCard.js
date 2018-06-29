@@ -3,8 +3,8 @@ import * as proptypes from 'prop-types'
 const TeammateCard = (props) => (
   <div className="teammate-card--outer">
     <div className="teammate-card--inner">
-      <h3>Toby L</h3>
-      <h4>3</h4>
+      <h3>{props.name}</h3>
+      <h4>{props.score}</h4>
     </div>
 
     <style jsx>{`
@@ -12,11 +12,20 @@ const TeammateCard = (props) => (
         width: 150px;
         margin: 10px;
         background: silver;
+        position: relative;
       }
 
       .teammate-card--inner {
         margin: 3px;
         text-align: center;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      h4 {
+        font-size: 35px;
       }
     `}</style>
   </div>
@@ -24,9 +33,7 @@ const TeammateCard = (props) => (
 
 TeammateCard.propTypes = {
   name: proptypes.string,
-  description: proptypes.string,
-  url: proptypes.string,
-  ogImage: proptypes.string
+  score: proptypes.number,
 }
 
 export default TeammateCard
