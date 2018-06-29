@@ -8,7 +8,7 @@ const TeammateCard = (props) => {
   const { score, name, id, bootstrap: { showCards, localUser } } = props
   const isLocalUser = id == localUser.id
 
-  let scoreDisplay = {score};
+  let scoreDisplay = score;
   if (!showCards) {
     scoreDisplay = ''
   } else if (score === QUESTION) {
