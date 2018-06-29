@@ -10,7 +10,6 @@ const scoreValueStyle = {
 }
 
 const ScoreCard = (props) => {
-  console.log('ScoreCard:', props);
   const { bootstrap: { localUser: { id }, users }, score, dispatch } = props
   const currentScore = users[id].score
   const isSelected = currentScore === score
