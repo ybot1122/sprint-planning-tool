@@ -59,10 +59,10 @@ export const apiOpenConnectionFailure = (error) => {
   }
 }
 
-export const apiOpenConnection = (name) => {
+export const apiOpenConnection = (name, roomName) => {
   return (dispatch) => {
     dispatch(apiOpenConnectionStart())
-    _API.openConnection(name, dispatch)
+    _API.openConnection(name, roomName, dispatch)
       .then((data) => {
         console.log(data)
         dispatch(apiOpenConnectionSuccess(data.players, data.id))

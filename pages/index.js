@@ -4,16 +4,26 @@ import Link from 'next/link'
 import MyLayout from '../components/MyLayout'
 import { ROOM } from '../constants/routes';
 
-const room = (props) => {
+import { apiOpenConnection } from '../actions/actions'
+
+const index = (props) => {
   const { bootstrap: { users, connection, localUser } } = props;
+  const onJoinCreateClick = () => {
+    if (!connection.isConnected && !connection.isLoading) {
+      props.openSocketConnection(users.find((el) => el.id === localUser.id).name, this.roomNameInput)
+    }
+  }
 
   return (
     <div>
       <div className="hero">
-        <div className="teammate-cards">
-          <h1>Join a room</h1>
-          <h4>or</h4>
-          <h1><Link href={ROOM}>Create a room</Link></h1>
+        <div className="frame">
+          <input
+            type="text"
+            placeholder="enter-room-name-here"
+            onChange={(e) => this.roomNameInput = e.target.value}>
+          </input>
+          <h1><Link href={ROOM}><span onClick={onJoinCreateClick}>join/create</span></Link></h1>
         </div>
       </div>
 
@@ -22,19 +32,21 @@ const room = (props) => {
           width: 100%;
           color: #333;
         }
-        .teammate-cards {
+        .frame {
           margin: 0;
           width: 100%;
           color: #0033A0;
-        }
-        .point-cards {
-          margin: 20px 0;
-          width: 100%;
-          height: 100px;
-          background: light-blue;
-        }
-        .teammate-cards, .point-cards {
           text-align: center;
+        }
+        input {
+          font-size: 30px;
+          height: 30px;
+          line-height: 30px;
+          padding: 3px;
+        }
+
+        h1 {
+          cursor: pointer;
         }
       `}</style>
     </div>
@@ -42,5 +54,8 @@ const room = (props) => {
 }
 
 const mapStateToProps = (state) => state
+const bindActionsToDispatch = (dispatch) => ({
+  openSocketConnection: (name, room) => dispatch(apiOpenConnection(name, room))
+})
 
-export default MyLayout(connect(mapStateToProps)(room));
+export default MyLayout(connect(mapStateToProps, bindActionsToDispatch)(index));

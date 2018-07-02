@@ -7,12 +7,11 @@ let socket = null;
 // TODO: hook up
 const onRefresh = (dispatch) => {
   socket.on(apiEvents.EVENT_REFRESH, (players) => {
-    console.log('toby, received a socket emit')
     dispatch(updateEverything({ players, id: socket.id }))
   })
 }
 
-export const openConnection = (name, dispatch) => {
+export const openConnection = (name, roomName, dispatch) => {
   if (socket != null) {
     console.warn('tried to open connection that already open')
     return
@@ -21,7 +20,7 @@ export const openConnection = (name, dispatch) => {
   const apiPromise = new Promise((res, rej) => {
     socket = openSocket('http://localhost:4200')
     socket.on('connect', () => {
-      socket.emit(apiEvents.EVENT_NEW_PLAYER, name, 'some room name', (players, err) => {
+      socket.emit(apiEvents.EVENT_NEW_PLAYER, name, roomName, (players, err) => {
         if (err) {
           rej(err)
         } else {
