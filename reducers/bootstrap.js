@@ -22,8 +22,10 @@ const initialState = {
 }
 
 const putLocalUserFirst = (users, id) => {
+  console.log(users, id)
   const ind = users.findIndex((el) => el.id === id)
   const copy = Object.assign({}, users[ind])
+  console.log(copy)
   users.splice(ind, 1)
   users.unshift(copy)
 }
@@ -32,6 +34,8 @@ const bootstrap = (state = initialState, action) => {
   switch (action.type) {
     case _ACTION.UPDATE_EVERYTHING:
       state.users = action.players
+      state.localUser.id = action.id
+      putLocalUserFirst(state.users, state.localUser.id)
       return Object.assign({}, state)
     case _ACTION.UPDATE_SCORE:
       state.users.find((el) => el.id === action.playerId).score = action.score
@@ -65,6 +69,7 @@ const bootstrap = (state = initialState, action) => {
       return Object.assign({}, state)
     case _ACTION.API.UPDATE_SCORE.SUCCESS:
       state.users = action.players
+      state.localUser.id = action.id
       putLocalUserFirst(state.users, state.localUser.id)
       return Object.assign({}, state)
     case _ACTION.API.UPDATE_SCORE.FAILURE:

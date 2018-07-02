@@ -7,7 +7,7 @@ let socket = null;
 // TODO: hook up
 const onRefresh = (dispatch) => {
   socket.on(apiEvents.EVENT_REFRESH, (players) => {
-    dispatch(updateEverything(players))
+    dispatch(updateEverything({ players, id: socket.id }))
   })
 }
 
@@ -24,6 +24,7 @@ export const openConnection = (name, dispatch) => {
         if (err) {
           rej(err)
         } else {
+          onRefresh(dispatch)
           res({ players, id: socket.id })
         }
       })
@@ -44,7 +45,7 @@ export const updateScore = (score) => {
       if (err) {
         rej(err)
       } else {
-        res({ players })
+        res({ players, id: socket.id })
       }
     })
   })

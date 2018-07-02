@@ -20,10 +20,11 @@ export const updateName = (playerId, name) => {
   }
 }
 
-export const updateEverything = (players) => {
+export const updateEverything = (data) => {
   return {
     type: ACTION.UPDATE_EVERYTHING,
-    players,
+    players: data.players,
+    id: data.id,
   }
 }
 
@@ -77,10 +78,11 @@ export const apiUpdateScoreStart = () => {
   }
 }
 
-export const apiUpdateScoreSuccess = (players) => {
+export const apiUpdateScoreSuccess = (players, id) => {
   return {
     type: ACTION.API.UPDATE_SCORE.SUCCESS,
     players,
+    id,
   }
 }
 
@@ -97,7 +99,7 @@ export const apiUpdateScore = (score) => {
     _API.updateScore(score)
       .then((data) => {
         console.log(data)
-        dispatch(apiUpdateScoreSuccess(data.players))
+        dispatch(apiUpdateScoreSuccess(data.players, data.id))
       })
       .catch((err) => {
         console.log(err)
