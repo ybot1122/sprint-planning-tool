@@ -32,11 +32,19 @@ app.prepare()
 
 // socket.io backend
 const players = []
-io.on('connection', (client) => {  
-  console.log('Client connected...')
+io.on('connection', (socket) => {  
+  console.log(socket.id + ' connected...')
 
-  client.on('join', (data) => {
-    console.log('toby')
+  socket.on('join', () => {
+    players.push({ id: socket.id, score: null })
+    console.log(players)
+  })
+
+  socket.on('disconnect', (reason) => {
+    const ind = players.findIndex((el) => el.id === socket.id)
+    players.splice(ind, 1)
+    console.log(socket.id + ' disconnected because ' + reason)
   })
 })
+
 socketServer.listen(4200)

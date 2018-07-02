@@ -7,8 +7,6 @@ import ScoreCard from '../components/ScoreCard'
 import { apiOpenConnection } from '../actions/actions'
 
 const index = (props) => {
-  console.log('Home Page', props)
-
   const { bootstrap: { users, connection } } = props;
 
   if (!connection.isConnected && !connection.isLoading) {

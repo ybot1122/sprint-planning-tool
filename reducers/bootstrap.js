@@ -14,19 +14,7 @@ const initialState = {
   },
   users: [
     {
-      name: 'Toby',
-      score: 3,
-    },
-    {
-      name: 'Other Toby',
-      score: 3,
-    },
-    {
-      name: 'Evil Toby',
-      score: 3,
-    },
-    {
-      name: 'Good Toby',
+      name: 'New User',
       score: null,
     },
   ],
