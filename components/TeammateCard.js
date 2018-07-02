@@ -8,9 +8,11 @@ const TeammateCard = (props) => {
   const { score, name, id, bootstrap: { showCards, localUser } } = props
   const isLocalUser = id === localUser.id
 
-  let scoreDisplay = score;
-  if (!showCards) {
-    scoreDisplay = ''
+  let scoreDisplay = score
+  let h4cname = ''
+  if (!showCards && !isLocalUser) {
+    scoreDisplay = 'x'
+    h4cname = 'camo'
   } else if (score === QUESTION) {
     scoreDisplay = '?'
   } else if (score === UNDECIDED) {
@@ -23,7 +25,7 @@ const TeammateCard = (props) => {
     <div className="teammate-card--outer">
       <div className="teammate-card--inner">
         {isLocalUser ? <h3><EditableName /></h3> : <h3>{name}</h3>}
-        <h4>{scoreDisplay}</h4>
+        <h4 className={h4cname}>{scoreDisplay}</h4>
       </div>
 
       <style jsx>{`
@@ -50,6 +52,12 @@ const TeammateCard = (props) => {
           height: 35px;
           line-height: 35px;
           font-size: 35px;
+          min-width: 10px;
+          display: block;
+        }
+
+        h4.camo {
+          color: #ABCAE9;
         }
       `}</style>
     </div>
