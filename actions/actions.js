@@ -1,11 +1,14 @@
 import * as ACTION from '../constants/actionTypes'
-import { openConnection } from '../api/api' 
+import * as _API from '../api/api' 
 
 export const updateScore = (playerId, score) => {
-  return {
-    type: ACTION.UPDATE_SCORE,
-    playerId,
-    score,
+  return (dispatch) => {
+    dispatch(apiUpdateScore(score))
+    dispatch({
+      type: ACTION.UPDATE_SCORE,
+      playerId,
+      score,
+    })
   }
 }
 
@@ -23,6 +26,7 @@ export const toggleShowCards = () => {
   }
 }
 
+// api open connection
 export const apiOpenConnectionStart = () => {
   return {
     type: ACTION.API.OPEN_CONNECTION.START,
@@ -46,7 +50,7 @@ export const apiOpenConnectionFailure = (error) => {
 export const apiOpenConnection = (name) => {
   return (dispatch) => {
     dispatch(apiOpenConnectionStart())
-    openConnection(name)
+    _API.openConnection(name)
       .then((players) => {
         console.log(players)
         dispatch(apiOpenConnectionSuccess(players))
@@ -54,6 +58,42 @@ export const apiOpenConnection = (name) => {
       .catch((err) => {
         console.log(err)
         dispatch(apiOpenConnectionFailure(err))
+      })
+  }
+}
+
+// api update score
+export const apiUpdateScoreStart = () => {
+  return {
+    type: ACTION.API.UPDATE_SCORE.START,
+  }
+}
+
+export const apiUpdateScoreSuccess = (players) => {
+  return {
+    type: ACTION.API.UPDATE_SCORE.SUCCESS,
+    players,
+  }
+}
+
+export const apiUpdateScoreFailure = (error) => {
+  return {
+    type: ACTION.API.UPDATE_SCORE.FAILURE,
+    error,
+  }
+}
+
+export const apiUpdateScore = (score) => {
+  return (dispatch) => {
+    dispatch(apiUpdateScoreStart())
+    _API.updateScore(score)
+      .then((players) => {
+        console.log(players)
+        dispatch(apiUpdateScoreSuccess(players))
+      })
+      .catch((err) => {
+        console.log(err)
+        dispatch(apiUpdateScoreFailure(err))
       })
   }
 }

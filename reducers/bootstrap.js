@@ -48,6 +48,15 @@ const bootstrap = (state = initialState, action) => {
       state.connection.error = action.error
       state.connection.payload = null
       return Object.assign({}, state)
+    case _ACTION.API.UPDATE_SCORE.START:
+      // no-op
+      return Object.assign({}, state)
+    case _ACTION.API.UPDATE_SCORE.SUCCESS:
+      // no-op
+      return Object.assign({}, state)
+    case _ACTION.API.UPDATE_SCORE.FAILURE:
+      // retry?
+      return Object.assign({}, state)
     default:
       return state
   }

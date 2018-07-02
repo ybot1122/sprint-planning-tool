@@ -32,7 +32,8 @@ export const updateScore = (score) => {
   }
 
   const apiPromise = new Promise((res, rej) => {
-    socket.emit(apiEvents.EVENT_UPDATE_NAME, score, (players, err) => {
+    socket.emit(apiEvents.EVENT_UPDATE_SCORE, score, (players, err) => {
+      console.log(players)
       if (err) {
         rej(err)
       } else {

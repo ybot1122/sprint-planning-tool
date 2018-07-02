@@ -6,10 +6,18 @@ const rootReducer = combineReducers({
   bootstrap,
 })
 
-const enhancers = compose(
-  applyMiddleware(thunk),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
+const enhancers = (() => {
+  if (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__) {
+    return compose(
+      applyMiddleware(thunk),
+      window.__REDUX_DEVTOOLS_EXTENSION__(),
+    )
+  } else {
+    return compose(
+      applyMiddleware(thunk)
+    )
+  }
+})()
 
 const store = createStore(
   rootReducer,
