@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
+import Link from 'next/link'
 
 import MyLayout from '../components/MyLayout'
-import TeammateCard from '../components/TeammateCard'
-import ScoreCard from '../components/ScoreCard'
 import { apiOpenConnection } from '../actions/actions'
+import { ROOM } from '../constants/routes';
 
 const room = (props) => {
   const { bootstrap: { users, connection, localUser } } = props;
@@ -12,15 +12,13 @@ const room = (props) => {
     props.openSocketConnection(users.find((el) => el.id === localUser.id).name)
   }
 
-  const teammateCards = users.map((el, ind) => <TeammateCard name={el.name} score={el.score} id={el.id} key={ind} />);
-
   return (
     <div>
       <div className="hero">
         <div className="teammate-cards">
           <h1>Join a room</h1>
           <h4>or</h4>
-          <h1>Create a room</h1>
+          <h1><Link href={ROOM}>Create a room</Link></h1>
         </div>
       </div>
 
