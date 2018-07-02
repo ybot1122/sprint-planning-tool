@@ -1,14 +1,19 @@
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import Link from 'next/link';
-import MyLayout from '../components/MyLayout';
-import TeammateCard from '../components/TeammateCard';
-import ScoreCard from '../components/ScoreCard';
+import Link from 'next/link'
+import MyLayout from '../components/MyLayout'
+import TeammateCard from '../components/TeammateCard'
+import ScoreCard from '../components/ScoreCard'
+import { apiOpenConnection } from '../actions/actions'
 
 const index = (props) => {
   console.log('Home Page', props)
 
-  const { bootstrap: { users } } = props;
+  const { bootstrap: { users, connection } } = props;
+
+  if (!connection.isConnected && !connection.isLoading) {
+    props.openSocketConnection()
+  }
 
   const teammateCards = users.map((el, ind) => <TeammateCard name={el.name} score={el.score} id={ind} key={ind} />);
 
@@ -56,4 +61,9 @@ const index = (props) => {
   )
 }
 
-export default MyLayout(connect(state => state)(index));
+const mapStateToProps = (state) => state
+const bindActionsToDispatch = (dispatch) => ({
+  openSocketConnection: () => dispatch(apiOpenConnection())
+})
+
+export default MyLayout(connect(mapStateToProps, bindActionsToDispatch)(index));

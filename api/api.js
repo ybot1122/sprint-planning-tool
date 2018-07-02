@@ -11,7 +11,7 @@ export const openConnection = () => {
   const apiPromise = new Promise((res, rej) => {
     socket = openSocket('http://localhost:4200')
     socket.on('connect', (data) => {
-      console.log(data.id)
+      console.log(data)
       socket.emit('join')
       res(data)
     })
