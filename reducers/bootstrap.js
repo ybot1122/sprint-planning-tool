@@ -21,6 +21,13 @@ const initialState = {
   ],
 }
 
+const putLocalUserFirst = (users, id) => {
+  const ind = users.findIndex((el) => el.id === id)
+  const copy = Object.assign({}, users[ind])
+  users.splice(ind, 1)
+  users.unshift(copy)
+}
+
 const bootstrap = (state = initialState, action) => {
   switch (action.type) {
     case _ACTION.UPDATE_EVERYTHING:
@@ -45,6 +52,7 @@ const bootstrap = (state = initialState, action) => {
       state.connection.error = null
       state.users = action.players
       state.localUser.id = action.id
+      putLocalUserFirst(state.users, action.id)
       return Object.assign({}, state)
     case _ACTION.API.OPEN_CONNECTION.FAILURE:
       state.connection.isLoading = false
@@ -56,8 +64,8 @@ const bootstrap = (state = initialState, action) => {
       // no-op
       return Object.assign({}, state)
     case _ACTION.API.UPDATE_SCORE.SUCCESS:
-      // no-op
       state.users = action.players
+      putLocalUserFirst(state.users, state.localUser.id)
       return Object.assign({}, state)
     case _ACTION.API.UPDATE_SCORE.FAILURE:
       // retry?

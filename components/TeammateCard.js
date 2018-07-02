@@ -59,7 +59,6 @@ const TeammateCard = (props) => {
 TeammateCard.propTypes = {
   name: proptypes.string,
   score: proptypes.number,
-  id: proptypes.number,
 }
 
 export default connect(state => state)(TeammateCard)

@@ -3,7 +3,7 @@ import { updateName } from '../actions/actions'
 
 const EditableName = (props) => {
   const { dispatch, bootstrap: { localUser: { id }, users } } = props
-  const name = users[id].name
+  const name = users.find((el) => el.id === id).name
 
   return (
     <div className="editablename--outer">
