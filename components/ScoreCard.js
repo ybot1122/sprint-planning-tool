@@ -11,7 +11,7 @@ const scoreValueStyle = {
 
 const ScoreCard = (props) => {
   const { bootstrap: { localUser: { id }, users }, score, dispatch } = props
-  const currentScore = users[id].score
+  const currentScore = users.find((el) => el.id === id).score
   const isSelected = currentScore === score
 
   let scoreDisplay = <h4 style={scoreValueStyle}>{score}</h4>;

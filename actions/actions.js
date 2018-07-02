@@ -20,6 +20,13 @@ export const updateName = (playerId, name) => {
   }
 }
 
+export const updateEverything = (players) => {
+  return {
+    type: ACTION.UPDATE_EVERYTHING,
+    players,
+  }
+}
+
 export const toggleShowCards = () => {
   return {
     type: ACTION.TOGGLE_SHOW_CARDS,
@@ -33,10 +40,11 @@ export const apiOpenConnectionStart = () => {
   }
 }
 
-export const apiOpenConnectionSuccess = (players) => {
+export const apiOpenConnectionSuccess = (players, id) => {
   return {
     type: ACTION.API.OPEN_CONNECTION.SUCCESS,
     players,
+    id,
   }
 }
 
@@ -50,10 +58,10 @@ export const apiOpenConnectionFailure = (error) => {
 export const apiOpenConnection = (name) => {
   return (dispatch) => {
     dispatch(apiOpenConnectionStart())
-    _API.openConnection(name)
-      .then((players) => {
-        console.log(players)
-        dispatch(apiOpenConnectionSuccess(players))
+    _API.openConnection(name, dispatch)
+      .then((data) => {
+        console.log(data)
+        dispatch(apiOpenConnectionSuccess(data.players, data.id))
       })
       .catch((err) => {
         console.log(err)
@@ -87,9 +95,9 @@ export const apiUpdateScore = (score) => {
   return (dispatch) => {
     dispatch(apiUpdateScoreStart())
     _API.updateScore(score)
-      .then((players) => {
-        console.log(players)
-        dispatch(apiUpdateScoreSuccess(players))
+      .then((data) => {
+        console.log(data)
+        dispatch(apiUpdateScoreSuccess(data.players))
       })
       .catch((err) => {
         console.log(err)

@@ -6,7 +6,7 @@ import { COFFEE, QUESTION, UNDECIDED } from '../constants/scores'
 
 const TeammateCard = (props) => {
   const { score, name, id, bootstrap: { showCards, localUser } } = props
-  const isLocalUser = id == localUser.id
+  const isLocalUser = id === localUser.id
 
   let scoreDisplay = score;
   if (!showCards) {

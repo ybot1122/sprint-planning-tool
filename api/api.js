@@ -1,9 +1,17 @@
 import openSocket from 'socket.io-client';
 import * as apiEvents from '../constants/apiConstants'
+import { updateEverything } from '../actions/actions'
 
 let socket = null;
 
-export const openConnection = (name) => {
+// TODO: hook up
+const onRefresh = (dispatch) => {
+  socket.on(apiEvents.EVENT_REFRESH, (players) => {
+    dispatch(updateEverything(players))
+  })
+}
+
+export const openConnection = (name, dispatch) => {
   if (socket != null) {
     console.warn('tried to open connection that already open')
     return
@@ -11,12 +19,12 @@ export const openConnection = (name) => {
 
   const apiPromise = new Promise((res, rej) => {
     socket = openSocket('http://localhost:4200')
-    socket.on('connect', (data) => {
+    socket.on('connect', () => {
       socket.emit(apiEvents.EVENT_NEW_PLAYER, name, (players, err) => {
         if (err) {
           rej(err)
         } else {
-          res(players)
+          res({ players, id: socket.id })
         }
       })
     })
@@ -33,11 +41,10 @@ export const updateScore = (score) => {
 
   const apiPromise = new Promise((res, rej) => {
     socket.emit(apiEvents.EVENT_UPDATE_SCORE, score, (players, err) => {
-      console.log(players)
       if (err) {
         rej(err)
       } else {
-        res(players)
+        res({ players })
       }
     })
   })
