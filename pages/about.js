@@ -7,13 +7,16 @@ const about = (props) => {
   return (
     <div>
       <div className="hero">
-        <h1> About Section</h1>
+        <h1>About Section</h1>
+        <p>This is a tool designed to help during estimating.</p>
+        <p>Let me know how you like it</p>
       </div>
 
       <style jsx>{`
         .hero {
           width: 100%;
           color: #333;
+          text-align: center;
         }
 
         h1 {
