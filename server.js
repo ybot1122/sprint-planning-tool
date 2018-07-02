@@ -45,6 +45,16 @@ io.on('connection', (socket) => {
     console.log(players)
   })
 
+  socket.on(apiEvents.EVENT_UPDATE_SCORE, (score, callback) => {
+    if (score) {
+      const ind = players.findIndex((el) => el.id === socket.id)
+      players[ind].score = score
+      callback(players)
+    } else {
+      callback('callback failed because score must be valid')
+    }
+  })
+
   socket.on('disconnect', (reason) => {
     const ind = players.findIndex((el) => el.id === socket.id)
     players.splice(ind, 1)

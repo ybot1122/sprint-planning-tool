@@ -24,3 +24,22 @@ export const openConnection = (name) => {
 
   return apiPromise
 }
+
+export const updateScore = (score) => {
+  if (socket == null) {
+    console.warn('tried to update score before opening connection')
+    return
+  }
+
+  const apiPromise = new Promise((res, rej) => {
+    socket.emit(apiEvents.EVENT_UPDATE_NAME, score, (players, err) => {
+      if (err) {
+        rej(err)
+      } else {
+        res(players)
+      }
+    })
+  })
+
+  return apiPromise
+}
