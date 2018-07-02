@@ -1,4 +1,5 @@
 import * as ACTION from '../constants/actionTypes'
+import { openConnection } from '../api/api' 
 
 export const updateScore = (playerId, score) => {
   return {
@@ -19,5 +20,40 @@ export const updateName = (playerId, name) => {
 export const toggleShowCards = () => {
   return {
     type: ACTION.TOGGLE_SHOW_CARDS,
+  }
+}
+
+export const apiOpenConnectionStart = () => {
+  return {
+    type: ACTION.API.OPEN_CONNECTION.START,
+  }
+}
+
+export const apiOpenConnectionSuccess = (payload) => {
+  return {
+    type: ACTION.API.OPEN_CONNECTION.SUCCESS,
+    payload,
+  }
+}
+
+export const apiOpenConnectionFailure = (error) => {
+  return {
+    type: ACTION.API.OPEN_CONNECTION.FAILURE,
+    error,
+  }
+}
+
+export const apiOpenConnection = () => {
+  return (dispatch) => {
+    dispatch(apiOpenConnectionStart())
+    openConnection()
+      .then((data) => {
+        console.log(data)
+        dispatch(apiOpenConnectionSuccess(data))
+      })
+      .catch((err) => {
+        console.log(err)
+        dispatch(apiOpenConnectionFailure(err))
+      })
   }
 }
