@@ -31,53 +31,62 @@ app.prepare()
 })
 
 // socket.io backend
-const players = []
+const activeSessions = {}
 io.on('connection', (socket) => {
   console.log(socket.id + ' connected...')
   console.log('emitting refresh')
 
-  socket.on(apiEvents.EVENT_NEW_PLAYER, (name, callback) => {
-    if (name) {
-      players.push({ id: socket.id, score: null, name })
-      callback(players)
+  socket.on(apiEvents.EVENT_NEW_PLAYER, (name, roomName, callback) => {
+    if (name && roomName) {
+      if (!activeSessions[roomName]) {
+        activeSessions[roomName] = []
+      }
+      activeSessions[roomName].push({ id: socket.id, score: null, name })
+      socket.join(roomName)
+      callback(activeSessions[roomName])
       console.log('emitting refresh')
-      socket.broadcast.emit(apiEvents.EVENT_REFRESH, players)
+      socket.to(roomName).broadcast.emit(apiEvents.EVENT_REFRESH, activeSessions[roomName])
     } else {
-      callback('failed because name must be valid')
+      callback(null, 'failed because name and roomName must be valid')
     }
-    console.log(players)
   })
 
   socket.on(apiEvents.EVENT_UPDATE_SCORE, (score, callback) => {
     if (score) {
+      const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
+      const players = activeSessions[roomName]
       const ind = players.findIndex((el) => el.id === socket.id)
       players[ind].score = score
       callback(players)
       console.log('emitting refresh')
-      socket.broadcast.emit(apiEvents.EVENT_REFRESH, players)
+      socket.to(roomName).broadcast.emit(apiEvents.EVENT_REFRESH, players)
     } else {
-      callback('callback failed because score must be valid')
+      callback(null, 'callback failed because score must be valid')
     }
-    console.log(players)
   })
 
   socket.on(apiEvents.EVENT_UPDATE_NAME, (name, callback) => {
     if (name) {
+      const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
+      const players = activeSessions[roomName]
       const ind = players.findIndex((el) => el.id === socket.id)
       players[ind].name = name
       callback(players)
       console.log('emitting refresh')
       socket.broadcast.emit(apiEvents.EVENT_REFRESH, players)
     } else {
-      callback('callback failed because score must be valid')
+      callback(null, 'callback failed because score must be valid')
     }
-    console.log(players)
   })
 
   socket.on('disconnect', (reason) => {
-    const ind = players.findIndex((el) => el.id === socket.id)
-    players.splice(ind, 1)
-    console.log(socket.id + ' disconnected because ' + reason)
+    const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
+    if (roomName) {
+      const players = activeSessions[roomName]
+      const ind = players.findIndex((el) => el.id === socket.id)
+      players.splice(ind, 1)
+      console.log(socket.id + ' disconnected because ' + reason)      
+    }
   })
 })
 

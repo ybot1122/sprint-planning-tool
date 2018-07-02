@@ -21,7 +21,7 @@ export const openConnection = (name, dispatch) => {
   const apiPromise = new Promise((res, rej) => {
     socket = openSocket('http://localhost:4200')
     socket.on('connect', () => {
-      socket.emit(apiEvents.EVENT_NEW_PLAYER, name, (players, err) => {
+      socket.emit(apiEvents.EVENT_NEW_PLAYER, name, 'some room name', (players, err) => {
         if (err) {
           rej(err)
         } else {
