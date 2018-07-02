@@ -43,10 +43,10 @@ export const apiOpenConnectionFailure = (error) => {
   }
 }
 
-export const apiOpenConnection = () => {
+export const apiOpenConnection = (name) => {
   return (dispatch) => {
     dispatch(apiOpenConnectionStart())
-    openConnection()
+    openConnection(name)
       .then((data) => {
         console.log(data)
         dispatch(apiOpenConnectionSuccess(data))

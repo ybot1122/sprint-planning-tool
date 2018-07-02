@@ -35,8 +35,10 @@ const players = []
 io.on('connection', (socket) => {  
   console.log(socket.id + ' connected...')
 
-  socket.on('join', () => {
-    players.push({ id: socket.id, score: null })
+  socket.on(apiEvents.EVENT_NEW_PLAYER, (name) => {
+    if (name) {
+      players.push({ id: socket.id, score: null, name })
+    }
     console.log(players)
   })
 

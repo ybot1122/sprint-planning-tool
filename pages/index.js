@@ -7,10 +7,10 @@ import ScoreCard from '../components/ScoreCard'
 import { apiOpenConnection } from '../actions/actions'
 
 const index = (props) => {
-  const { bootstrap: { users, connection } } = props;
+  const { bootstrap: { users, connection, localUser } } = props;
 
   if (!connection.isConnected && !connection.isLoading) {
-    props.openSocketConnection()
+    props.openSocketConnection(users[localUser.id].name)
   }
 
   const teammateCards = users.map((el, ind) => <TeammateCard name={el.name} score={el.score} id={ind} key={ind} />);
@@ -61,7 +61,7 @@ const index = (props) => {
 
 const mapStateToProps = (state) => state
 const bindActionsToDispatch = (dispatch) => ({
-  openSocketConnection: () => dispatch(apiOpenConnection())
+  openSocketConnection: (name) => dispatch(apiOpenConnection(name))
 })
 
 export default MyLayout(connect(mapStateToProps, bindActionsToDispatch)(index));
