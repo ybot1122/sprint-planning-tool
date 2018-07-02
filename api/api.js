@@ -12,10 +12,14 @@ export const openConnection = (name) => {
   const apiPromise = new Promise((res, rej) => {
     socket = openSocket('http://localhost:4200')
     socket.on('connect', (data) => {
-      socket.emit(apiEvents.EVENT_NEW_PLAYER, name)
-      res(data)
+      socket.emit(apiEvents.EVENT_NEW_PLAYER, name, (players, err) => {
+        if (err) {
+          rej(err)
+        } else {
+          res(players)
+        }
+      })
     })
-    console.log(socket)
   })
 
   return apiPromise

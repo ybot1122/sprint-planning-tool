@@ -39,7 +39,8 @@ const bootstrap = (state = initialState, action) => {
       state.connection.isLoading = false
       state.connection.isConnected = true
       state.connection.error = null
-      state.connection.payload = action.payload
+      state.connection.players = action.players
+      state.users = action.players
       return Object.assign({}, state)
     case _ACTION.API.OPEN_CONNECTION.FAILURE:
       state.connection.isLoading = false

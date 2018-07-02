@@ -29,10 +29,10 @@ export const apiOpenConnectionStart = () => {
   }
 }
 
-export const apiOpenConnectionSuccess = (payload) => {
+export const apiOpenConnectionSuccess = (players) => {
   return {
     type: ACTION.API.OPEN_CONNECTION.SUCCESS,
-    payload,
+    players,
   }
 }
 
@@ -47,9 +47,9 @@ export const apiOpenConnection = (name) => {
   return (dispatch) => {
     dispatch(apiOpenConnectionStart())
     openConnection(name)
-      .then((data) => {
-        console.log(data)
-        dispatch(apiOpenConnectionSuccess(data))
+      .then((players) => {
+        console.log(players)
+        dispatch(apiOpenConnectionSuccess(players))
       })
       .catch((err) => {
         console.log(err)

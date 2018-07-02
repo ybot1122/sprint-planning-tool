@@ -32,12 +32,15 @@ app.prepare()
 
 // socket.io backend
 const players = []
-io.on('connection', (socket) => {  
+io.on('connection', (socket) => {
   console.log(socket.id + ' connected...')
 
-  socket.on(apiEvents.EVENT_NEW_PLAYER, (name) => {
+  socket.on(apiEvents.EVENT_NEW_PLAYER, (name, callback) => {
     if (name) {
       players.push({ id: socket.id, score: null, name })
+      callback(players)
+    } else {
+      callback('failed because name must be valid')
     }
     console.log(players)
   })
