@@ -34,12 +34,14 @@ app.prepare()
 const players = []
 io.on('connection', (socket) => {
   console.log(socket.id + ' connected...')
+  console.log('emitting refresh')
 
   socket.on(apiEvents.EVENT_NEW_PLAYER, (name, callback) => {
     if (name) {
       players.push({ id: socket.id, score: null, name })
       callback(players)
-      socket.emit(apiEvents.EVENT_REFRESH, players)
+      console.log('emitting refresh')
+      socket.broadcast.emit(apiEvents.EVENT_REFRESH, players)
     } else {
       callback('failed because name must be valid')
     }
@@ -51,7 +53,8 @@ io.on('connection', (socket) => {
       const ind = players.findIndex((el) => el.id === socket.id)
       players[ind].score = score
       callback(players)
-      socket.emit(apiEvents.EVENT_REFRESH, players)
+      console.log('emitting refresh')
+      socket.broadcast.emit(apiEvents.EVENT_REFRESH, players)
     } else {
       callback('callback failed because score must be valid')
     }

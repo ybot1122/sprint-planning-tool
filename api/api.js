@@ -7,6 +7,7 @@ let socket = null;
 // TODO: hook up
 const onRefresh = (dispatch) => {
   socket.on(apiEvents.EVENT_REFRESH, (players) => {
+    console.log('toby, received a socket emit')
     dispatch(updateEverything({ players, id: socket.id }))
   })
 }
