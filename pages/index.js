@@ -2,15 +2,10 @@ import { connect } from 'react-redux'
 import Link from 'next/link'
 
 import MyLayout from '../components/MyLayout'
-import { apiOpenConnection } from '../actions/actions'
 import { ROOM } from '../constants/routes';
 
 const room = (props) => {
   const { bootstrap: { users, connection, localUser } } = props;
-
-  if (!connection.isConnected && !connection.isLoading) {
-    props.openSocketConnection(users.find((el) => el.id === localUser.id).name)
-  }
 
   return (
     <div>
@@ -47,8 +42,5 @@ const room = (props) => {
 }
 
 const mapStateToProps = (state) => state
-const bindActionsToDispatch = (dispatch) => ({
-  openSocketConnection: (name) => dispatch(apiOpenConnection(name))
-})
 
-export default MyLayout(connect(mapStateToProps, bindActionsToDispatch)(room));
+export default MyLayout(connect(mapStateToProps)(room));

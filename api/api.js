@@ -25,6 +25,7 @@ export const openConnection = (name, dispatch) => {
         if (err) {
           rej(err)
         } else {
+          console.log('Socket Opened')
           onRefresh(dispatch)
           res({ players, id: socket.id })
         }
