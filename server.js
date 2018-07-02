@@ -9,6 +9,8 @@ const socketApp = express()
 const socketServer = require('http').createServer(socketApp)
 const io = require('socket.io')(socketServer)
 
+const apiEvents = require('./constants/apiConstants')
+
 // nextjs backend
 app.prepare()
 .then(() => {
@@ -29,11 +31,12 @@ app.prepare()
 })
 
 // socket.io backend
-io.on('connection', function(client) {  
+const players = []
+io.on('connection', (client) => {  
   console.log('Client connected...')
 
-  client.on('join', function(data) {
-    console.log(data)
+  client.on('join', (data) => {
+    console.log('toby')
   })
 })
 socketServer.listen(4200)

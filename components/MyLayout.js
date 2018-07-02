@@ -8,6 +8,10 @@ import Head from './Head'
 import Nav from './Nav'
 
 const socket = openSocket('http://localhost:4200');
+socket.on('connect', (data) => {
+  console.log(data)
+  socket.emit('join', 1000);
+})
 
 const MyLayout = (Page) => {
   return (
