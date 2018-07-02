@@ -13,10 +13,13 @@ export const updateScore = (playerId, score) => {
 }
 
 export const updateName = (playerId, name) => {
-  return {
-    type: ACTION.UPDATE_NAME,
-    playerId,
-    name,
+  return (dispatch) => {
+    dispatch(apiUpdateName(name))
+    dispatch({
+      type: ACTION.UPDATE_NAME,
+      playerId,
+      name,
+    })
   }
 }
 
@@ -104,6 +107,43 @@ export const apiUpdateScore = (score) => {
       .catch((err) => {
         console.log(err)
         dispatch(apiUpdateScoreFailure(err))
+      })
+  }
+}
+
+// api update name
+export const apiUpdateNameStart = () => {
+  return {
+    type: ACTION.API.UPDATE_NAME.START,
+  }
+}
+
+export const apiUpdateNameSuccess = (players, id) => {
+  return {
+    type: ACTION.API.UPDATE_NAME.SUCCESS,
+    players,
+    id,
+  }
+}
+
+export const apiUpdateNameFailure = (error) => {
+  return {
+    type: ACTION.API.UPDATE_NAME.FAILURE,
+    error,
+  }
+}
+
+export const apiUpdateName = (name) => {
+  return (dispatch) => {
+    dispatch(apiUpdateNameStart())
+    _API.updateName(name)
+      .then((data) => {
+        console.log(data)
+        dispatch(apiUpdateNameSuccess(data.players, data.id))
+      })
+      .catch((err) => {
+        console.log(err)
+        dispatch(apiUpdateNameFailure(err))
       })
   }
 }

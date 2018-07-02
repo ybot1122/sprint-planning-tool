@@ -44,7 +44,7 @@ const bootstrap = (state = initialState, action) => {
       state.showCards = !state.showCards
       return Object.assign({}, state)
     case _ACTION.UPDATE_NAME:
-      state.users[action.playerId].name = action.name
+      state.users.find((el) => el.id === action.playerId).name = action.name
       return Object.assign({}, state)
     case _ACTION.API.OPEN_CONNECTION.START:
       state.connection.isLoading = true
