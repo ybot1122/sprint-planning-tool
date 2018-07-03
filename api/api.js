@@ -14,7 +14,7 @@ const onRefresh = (dispatch) => {
 export const openConnection = (name, roomName, dispatch) => {
   if (socket != null) {
     console.warn('tried to open connection that already open')
-    return
+    return Promise.reject('tried to open connection that already open')
   }
 
   const apiPromise = new Promise((res, rej) => {
@@ -38,7 +38,7 @@ export const openConnection = (name, roomName, dispatch) => {
 export const updateScore = (score) => {
   if (socket == null) {
     console.warn('tried to update score before opening connection')
-    return
+    return Promise.reject('tried to update score before opening connection')
   }
 
   const apiPromise = new Promise((res, rej) => {
@@ -57,7 +57,7 @@ export const updateScore = (score) => {
 export const updateName = (name) => {
   if (socket == null) {
     console.warn('tried to update name before opening connection')
-    return
+    return Promise.reject('tried to update name before opening connection')
   }
 
   const apiPromise = new Promise((res, rej) => {

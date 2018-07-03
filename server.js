@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
       activeSessions[roomName].push({ id: socket.id, score: null, name })
       socket.join(roomName)
       callback(activeSessions[roomName])
-      console.log('emitting refresh')
+      console.log('added player : ' + name + ' to ' + roomName)
       socket.to(roomName).broadcast.emit(apiEvents.EVENT_REFRESH, activeSessions[roomName])
     } else {
       callback(null, 'failed because name and roomName must be valid')
@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
       const ind = players.findIndex((el) => el.id === socket.id)
       players[ind].score = score
       callback(players)
-      console.log('emitting refresh')
+      console.log('updated score : ' + players[ind].name + ': ' + score)
       socket.to(roomName).broadcast.emit(apiEvents.EVENT_REFRESH, players)
     } else {
       callback(null, 'callback failed because score must be valid')
@@ -72,20 +72,24 @@ io.on('connection', (socket) => {
       const ind = players.findIndex((el) => el.id === socket.id)
       players[ind].name = name
       callback(players)
-      console.log('emitting refresh')
+      console.log('updated name : ' + name)
       socket.broadcast.emit(apiEvents.EVENT_REFRESH, players)
     } else {
       callback(null, 'callback failed because score must be valid')
     }
   })
 
-  socket.on('disconnect', (reason) => {
+  socket.on('disconnecting', (reason) => {
     const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
     if (roomName) {
-      const players = activeSessions[roomName]
-      const ind = players.findIndex((el) => el.id === socket.id)
-      players.splice(ind, 1)
-      console.log(socket.id + ' disconnected because ' + reason)      
+      const ind = activeSessions[roomName].findIndex((el) => el.id === socket.id)
+      activeSessions[roomName].splice(ind, 1)
+      socket.to(roomName).broadcast.emit(apiEvents.EVENT_REFRESH, activeSessions[roomName])
+      console.log(socket.id + ' disconnected because ' + reason)
+      if (activeSessions[roomName].length === 0) {
+        delete activeSessions[roomName]
+        console.log(socket.id + ' wass the last user in room ' + roomName)
+      }
     }
   })
 })
