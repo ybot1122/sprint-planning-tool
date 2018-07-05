@@ -2,6 +2,10 @@ import openSocket from 'socket.io-client';
 import * as apiEvents from '../constants/apiConstants'
 import { updateEverything } from '../actions/actions'
 
+const socketDomain = (process.env.NODE_ENV === 'dev') 
+  ? 'http://localhost:4200'
+  : 'http://ec2-34-215-12-183.us-west-2.compute.amazonaws.com:4200'
+
 let socket = null;
 
 // TODO: hook up
@@ -18,7 +22,7 @@ export const openConnection = (name, roomName, dispatch) => {
   }
 
   const apiPromise = new Promise((res, rej) => {
-    socket = openSocket('http://localhost:4200')
+    socket = openSocket(socketDomain)
     socket.on('connect', () => {
       socket.emit(apiEvents.EVENT_NEW_PLAYER, name, roomName, (players, err) => {
         if (err) {
