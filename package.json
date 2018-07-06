@@ -1,8 +1,7 @@
 {
   "name": "create-next-example-app",
   "scripts": {
-    "dev": "NODE_ENV=dev node server.js",
-    "aws": "NODE_ENV=aws node server.js",
+    "dev": "node server.js",
     "lint": "./node_modules/.bin/eslint --ext .js *",
     "build": "next build",
     "start": "next start"

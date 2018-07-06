@@ -2,7 +2,7 @@ import openSocket from 'socket.io-client';
 import * as apiEvents from '../constants/apiConstants'
 import { updateEverything } from '../actions/actions'
 
-const socketDomain = (process.env.NODE_ENV === 'dev') 
+const socketDomain = (process.env.NODE_ENV === 'development') 
   ? 'http://localhost:4200'
   : 'http://ec2-34-215-12-183.us-west-2.compute.amazonaws.com:4200'
 
