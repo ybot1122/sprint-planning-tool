@@ -38,10 +38,12 @@ io.on('connection', (socket) => {
 
   socket.on(apiEvents.EVENT_NEW_PLAYER, (name, roomName, callback) => {
     if (name && roomName) {
+      let isMod = false
       if (!activeSessions[roomName]) {
         activeSessions[roomName] = []
+        isMod = true
       }
-      activeSessions[roomName].push({ id: socket.id, score: null, name })
+      activeSessions[roomName].push({ id: socket.id, score: null, name, isMod })
       socket.join(roomName)
       callback(activeSessions[roomName])
       console.log('added player : ' + name + ' to ' + roomName)
@@ -83,12 +85,14 @@ io.on('connection', (socket) => {
     const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
     if (roomName) {
       const ind = activeSessions[roomName].findIndex((el) => el.id === socket.id)
-      activeSessions[roomName].splice(ind, 1)
+      const player = activeSessions[roomName].splice(ind, 1)[0]
       socket.to(roomName).broadcast.emit(apiEvents.EVENT_REFRESH, activeSessions[roomName])
       console.log(socket.id + ' disconnected because ' + reason)
       if (activeSessions[roomName].length === 0) {
         delete activeSessions[roomName]
         console.log(socket.id + ' wass the last user in room ' + roomName)
+      } else if (player.isMod) {
+        activeSessions[roomName][0].isMod = true
       }
     }
   })

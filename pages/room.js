@@ -3,18 +3,17 @@ import { connect } from 'react-redux'
 import MyLayout from '../components/MyLayout'
 import TeammateCard from '../components/TeammateCard'
 import ScoreCard from '../components/ScoreCard'
-import { toggleShowCards } from '../actions/actions'
+import ModToolbar from '../components/ModToolbar'
 
 const room = (props) => {
-  const { bootstrap: { users, connection, localUser }, dispatch } = props;
+  const { bootstrap: { users, connection, localUser } } = props
 
-  const teammateCards = users.map((el, ind) => <TeammateCard name={el.name} score={el.score} id={el.id} key={ind} />);
+  const isModerator = users[0].isMod
+  const teammateCards = users.map((el, ind) => <TeammateCard name={el.name} score={el.score} id={el.id} key={ind} />)
 
   return (
     <div>
-      <div className="toolbar">
-        <span onClick={() => dispatch(toggleShowCards())}>Show/Hide Cards</span>
-      </div>
+      {isModerator && <ModToolbar />}
       <div className="hero">
         <div className="teammate-cards">
           {teammateCards}

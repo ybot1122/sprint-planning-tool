@@ -17,6 +17,7 @@ const initialState = {
       name: 'New User',
       score: null,
       id: 0,
+      isMod: false,
     },
   ],
 }
