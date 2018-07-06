@@ -40,14 +40,17 @@ io.on('connection', (socket) => {
     if (name && roomName) {
       let isMod = false
       if (!activeSessions[roomName]) {
-        activeSessions[roomName] = []
+        activeSessions[roomName] = {
+          showCards: false,
+          players: [],
+        }
         isMod = true
       }
-      activeSessions[roomName].push({ id: socket.id, score: null, name, isMod })
+      activeSessions[roomName].players.push({ id: socket.id, score: null, name, isMod })
       socket.join(roomName)
-      callback(activeSessions[roomName])
+      callback(activeSessions[roomName].players)
       console.log('added player : ' + name + ' to ' + roomName)
-      socket.to(roomName).broadcast.emit(apiEvents.EVENT_REFRESH, activeSessions[roomName])
+      socket.to(roomName).broadcast.emit(apiEvents.EVENT_REFRESH, activeSessions[roomName].players)
     } else {
       callback(null, 'failed because name and roomName must be valid')
     }
@@ -56,7 +59,7 @@ io.on('connection', (socket) => {
   socket.on(apiEvents.EVENT_UPDATE_SCORE, (score, callback) => {
     if (score) {
       const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
-      const players = activeSessions[roomName]
+      const players = activeSessions[roomName].players
       const ind = players.findIndex((el) => el.id === socket.id)
       players[ind].score = score
       callback(players)
@@ -70,7 +73,7 @@ io.on('connection', (socket) => {
   socket.on(apiEvents.EVENT_UPDATE_NAME, (name, callback) => {
     if (name) {
       const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
-      const players = activeSessions[roomName]
+      const players = activeSessions[roomName].players
       const ind = players.findIndex((el) => el.id === socket.id)
       players[ind].name = name
       callback(players)
@@ -84,15 +87,15 @@ io.on('connection', (socket) => {
   socket.on('disconnecting', (reason) => {
     const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
     if (roomName) {
-      const ind = activeSessions[roomName].findIndex((el) => el.id === socket.id)
-      const player = activeSessions[roomName].splice(ind, 1)[0]
-      socket.to(roomName).broadcast.emit(apiEvents.EVENT_REFRESH, activeSessions[roomName])
+      const ind = activeSessions[roomName].players.findIndex((el) => el.id === socket.id)
+      const player = activeSessions[roomName].players.splice(ind, 1)[0]
+      socket.to(roomName).broadcast.emit(apiEvents.EVENT_REFRESH, activeSessions[roomName].players)
       console.log(socket.id + ' disconnected because ' + reason)
-      if (activeSessions[roomName].length === 0) {
+      if (activeSessions[roomName].players.length === 0) {
         delete activeSessions[roomName]
         console.log(socket.id + ' wass the last user in room ' + roomName)
       } else if (player.isMod) {
-        activeSessions[roomName][0].isMod = true
+        activeSessions[roomName].players[0].isMod = true
       }
     }
   })
