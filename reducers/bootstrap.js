@@ -55,8 +55,10 @@ const bootstrap = (state = initialState, action) => {
       state.connection.isLoading = false
       state.connection.isConnected = true
       state.connection.error = null
+      console.log(action)
       state.users = action.players
       state.localUser.id = action.id
+      state.showCards = action.showCards
       putLocalUserFirst(state.users, action.id)
       return Object.assign({}, state)
     case _ACTION.API.OPEN_CONNECTION.FAILURE:

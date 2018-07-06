@@ -24,13 +24,13 @@ export const openConnection = (name, roomName, dispatch) => {
   const apiPromise = new Promise((res, rej) => {
     socket = openSocket(socketDomain)
     socket.on('connect', () => {
-      socket.emit(apiEvents.EVENT_NEW_PLAYER, name, roomName, (players, err) => {
+      socket.emit(apiEvents.EVENT_NEW_PLAYER, name, roomName, (data, err) => {
         if (err) {
           rej(err)
         } else {
-          console.log('Socket Opened')
+          console.log('Socket Opened', data)
           onRefresh(dispatch)
-          res({ players, id: socket.id })
+          res({ players: data.players, id: socket.id, showCards: data.showCards })
         }
       })
     })
