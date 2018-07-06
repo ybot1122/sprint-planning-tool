@@ -2,10 +2,10 @@ import { connect } from 'react-redux'
 
 import Link from 'next/link'
 import { HOME, ABOUT } from '../constants/routes';
-import { toggleShowCards } from '../actions/actions'
 
 const links = [
-  { href: 'https://github.com/segmentio/create-next-app', label: 'Github' },
+  { href: 'https://github.com/segmentio/create-next-app', label: 'Next.js Github' },
+  { href: 'https://github.com/ybot1122/sprint-planning-tool', label: 'Project Github' },
   { href: ABOUT, label: 'About' }
 ].map(link => {
   link.key = `nav-link-${link.href}-${link.label}`
@@ -13,7 +13,6 @@ const links = [
 })
 
 const Nav = (props) => {
-  const { dispatch } = props
   return (
     <nav>
       <ul>
@@ -22,11 +21,6 @@ const Nav = (props) => {
             <a>Home</a>
           </Link>
         </li>
-        <ul>
-          <li>
-            <a onClick={() => dispatch(toggleShowCards())}>Show/Hide</a>
-          </li>
-        </ul>
         <ul>
           {links.map(
             ({ key, href, label }) => (
@@ -64,6 +58,9 @@ const Nav = (props) => {
           text-decoration: none;
           font-size: 13px;
           cursor: pointer;
+        }
+        a:hover {
+          color: blue;
         }
       `}</style>
     </nav>
