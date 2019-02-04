@@ -9,7 +9,7 @@ const EditableName = (props) => {
       <input
         type="text"
         defaultValue={name}
-        onBlur={() => dispatch(updateName(userId, this.nameInput))}
+        onKeyUp={() => dispatch(updateName(userId, this.nameInput))}
         onChange={(e) => this.nameInput = e.target.value}>
       </input>
 
@@ -27,7 +27,7 @@ const EditableName = (props) => {
           border: none;
           border-bottom: 1px black solid;
           background: #ABCAE9;
-          font-size: 18px;
+          font-size: 12px;
           line-height: 21px;
           height: 21px;
           box-shadow: none;

@@ -32,6 +32,7 @@ const TeammateCard = (props) => {
         .teammate-card--outer {
           display: inline-block;
           width: 150px;
+          height: 180px;
           margin: 10px;
           background: #ABCAE9;
           position: relative;
@@ -45,7 +46,7 @@ const TeammateCard = (props) => {
         h3 {
           height: 21px;
           line-height: 21px;
-          font-size: 21px;
+          font-size: 12px;
         }
 
         h4 {
