@@ -10,7 +10,7 @@ const ModToolbar = (props) => {
       <style jsx>{`
         .toolbar {
           text-align: center;
-          margin-bottom: 5px;
+          margin: 15px;
         }
         .toolbar span:hover {
           cursor: pointer;

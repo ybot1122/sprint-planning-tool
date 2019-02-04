@@ -9,7 +9,7 @@ import Nav from './Nav'
 const MyLayout = (Page) => {
   return (
     class MyLayout extends React.Component {
-      render () {
+      render() {
         return (
           <Provider store={store}>
             <div>
@@ -25,7 +25,7 @@ const MyLayout = (Page) => {
           </Provider>
         );
       }
-    ;}
+    }
   );
 }
 

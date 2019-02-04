@@ -40,6 +40,7 @@ const Nav = (props) => {
           font-family: -apple-system,BlinkMacSystemFont,Avenir Next,Avenir,Helvetica,sans-serif;
         }
         nav {
+          display: none;
           text-align: center;
         }
         ul {

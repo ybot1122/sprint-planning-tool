@@ -16,6 +16,12 @@ app.prepare()
 .then(() => {
   const server = express()
 
+  server.get('/room/:roomId', (req, res) => {
+    const actualPage = '/room'
+    const queryParams = { roomId: req.params.roomId }
+    app.render(req, res, actualPage, queryParams)
+  })
+
   server.get('*', (req, res) => {
     return handle(req, res)
   })
@@ -32,11 +38,13 @@ app.prepare()
 
 // socket.io backend
 const activeSessions = {}
-io.on('connection', (socket) => {
+io.on('connect', (socket) => {
   console.log(socket.id + ' connected...')
   console.log('emitting refresh')
+  console.log(activeSessions)
 
   socket.on(apiEvents.EVENT_NEW_PLAYER, (name, roomName, callback) => {
+    console.log('received')
     if (name && roomName) {
       let isMod = false
       if (!activeSessions[roomName]) {
@@ -49,7 +57,7 @@ io.on('connection', (socket) => {
       activeSessions[roomName].players.push({ id: socket.id, score: null, name, isMod })
       socket.join(roomName)
       callback(activeSessions[roomName])
-      console.log('added player : ' + name + ' to ' + roomName)
+      console.log('added player : ' + name + '(id: ' + socket.id + ') to ' + roomName)
       socket.to(roomName).broadcast.emit(apiEvents.EVENT_REFRESH, activeSessions[roomName].players)
     } else {
       callback(null, 'failed because name and roomName must be valid')
@@ -57,8 +65,9 @@ io.on('connection', (socket) => {
   })
 
   socket.on(apiEvents.EVENT_UPDATE_SCORE, (score, callback) => {
-    if (score) {
+    if (score || score === null) {
       const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
+      console.log(roomName)
       const players = activeSessions[roomName].players
       const ind = players.findIndex((el) => el.id === socket.id)
       players[ind].score = score
