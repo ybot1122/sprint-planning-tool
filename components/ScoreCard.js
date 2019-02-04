@@ -10,8 +10,7 @@ const scoreValueStyle = {
 }
 
 const ScoreCard = (props) => {
-  const { bootstrap: { localUser: { id }, users }, score, dispatch } = props
-  const currentScore = users.find((el) => el.id === id).score
+  const { bootstrap: { userId, users, currentScore }, score, dispatch } = props
   const isSelected = currentScore === score
 
   let scoreDisplay = <h4 style={scoreValueStyle}>{score}</h4>;
@@ -23,7 +22,7 @@ const ScoreCard = (props) => {
 
   const cname = (isSelected) ? 'score-card--outer score-value-active' : 'score-card--outer'
   return (
-    <div className={cname} onClick={() => isSelected ? dispatch(updateScore(id, UNDECIDED)) : dispatch(updateScore(id, score))}>
+    <div className={cname} onClick={() => isSelected ? dispatch(updateScore(userId, UNDECIDED)) : dispatch(updateScore(userId, score))}>
       <div className="score-card--inner">
         {scoreDisplay}
       </div>

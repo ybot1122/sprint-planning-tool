@@ -7,10 +7,10 @@ import { ROOM } from '../constants/routes';
 import { apiOpenConnection } from '../actions/actions'
 
 const index = (props) => {
-  const { bootstrap: { users, connection, localUser } } = props;
+  const { bootstrap: { name, connection } } = props;
   const onJoinCreateClick = () => {
     if (!connection.isConnected && !connection.isLoading) {
-      props.openSocketConnection(users.find((el) => el.id === localUser.id).name, this.roomNameInput)
+      props.openSocketConnection(name, "DefaultRoom")
     }
   }
 
@@ -18,12 +18,7 @@ const index = (props) => {
     <div>
       <div className="hero">
         <div className="frame">
-          <input
-            type="text"
-            placeholder="enter-room-name-here"
-            onChange={(e) => this.roomNameInput = e.target.value}>
-          </input>
-          <h1><Link href={ROOM}><span onClick={onJoinCreateClick}>join/create</span></Link></h1>
+          <h1><Link href={ROOM}><span onClick={onJoinCreateClick}>Join Room</span></Link></h1>
         </div>
       </div>
 

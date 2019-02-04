@@ -2,15 +2,14 @@ import { connect } from 'react-redux'
 import { updateName } from '../actions/actions'
 
 const EditableName = (props) => {
-  const { dispatch, bootstrap: { localUser: { id }, users } } = props
-  const name = users.find((el) => el.id === id).name
+  const { dispatch, bootstrap: { userId, users, name } } = props
 
   return (
     <div className="editablename--outer">
       <input
         type="text"
         defaultValue={name}
-        onBlur={() => dispatch(updateName(id, this.nameInput))}
+        onBlur={() => dispatch(updateName(userId, this.nameInput))}
         onChange={(e) => this.nameInput = e.target.value}>
       </input>
 

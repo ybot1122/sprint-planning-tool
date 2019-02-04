@@ -8,7 +8,7 @@ import ModToolbar from '../components/ModToolbar'
 const room = (props) => {
   const { bootstrap: { users, connection, localUser } } = props
 
-  const isModerator = users[0].isMod
+  const isModerator = true
   const teammateCards = users.map((el, ind) => <TeammateCard name={el.name} score={el.score} id={el.id} key={ind} />)
 
   return (
