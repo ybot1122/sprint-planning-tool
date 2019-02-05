@@ -10,7 +10,7 @@ const scoreValueStyle = {
 }
 
 const ScoreCard = (props) => {
-  const { bootstrap: { userId, users, currentScore }, score, dispatch } = props
+  const { bootstrap: { userId, users, currentScore, showCards }, score, dispatch } = props
   const isSelected = currentScore === score
 
   let scoreDisplay = <h4 style={scoreValueStyle}>{score}</h4>;
@@ -20,9 +20,19 @@ const ScoreCard = (props) => {
     scoreDisplay = <h4 style={scoreValueStyle}><img src="/static/coffee.png" style={{height: '20px'}} /></h4>
   }
 
+  const clickHandler = () => {
+    if (!showCards) {
+      if (isSelected) {
+        dispatch(updateScore(userId, UNDECIDED))
+      } else {
+        dispatch(updateScore(userId, score))
+      }
+    }
+  }
+
   const cname = (isSelected) ? 'score-card--outer score-value-active' : 'score-card--outer'
   return (
-    <div className={cname} onClick={() => isSelected ? dispatch(updateScore(userId, UNDECIDED)) : dispatch(updateScore(userId, score))}>
+    <div className={cname} onClick={clickHandler}>
       <div className="score-card--inner">
         {scoreDisplay}
       </div>
