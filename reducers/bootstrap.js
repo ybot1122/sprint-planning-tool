@@ -53,6 +53,10 @@ const bootstrap = (state = initialState, action) => {
       // no-op
       return Object.assign({}, state)
     case _ACTION.API.RESET_SCORES.SUCCESS:
+      state.users = action.players
+      state.userId = action.id
+      state.currentScore = null
+      return Object.assign({}, state)
     case _ACTION.API.UPDATE_SCORE.SUCCESS:
       state.users = action.players
       state.userId = action.id
