@@ -31,9 +31,46 @@ export const updateEverything = (data) => {
   }
 }
 
-export const toggleShowCards = () => {
+export const toggleShowCards = (isVisible) => {
+  return (dispatch) => {
+    dispatch(apiToggleCardVisibility())
+    dispatch({ type: ACTION.TOGGLE_SHOW_CARDS, isVisible })
+  }
+}
+
+// api toggle card visibility
+export const apiCardVisibilityStart = () => {
   return {
-    type: ACTION.TOGGLE_SHOW_CARDS,
+    type: ACTION.API.CARD_VISIBILITY.START,
+  }
+}
+
+export const apiCardVisibilitySuccess = (id, isVisible) => {
+  return {
+    type: ACTION.API.CARD_VISIBILITY.SUCCESS,
+    id,
+    isVisible,
+  }
+}
+
+export const apiCardVisibilityFailure = (error) => {
+  return {
+    type: ACTION.API.CARD_VISIBILITY.FAILURE,
+    error,
+  }
+}
+
+export const apiToggleCardVisibility = () => {
+  return (dispatch) => {
+    dispatch(apiCardVisibilityStart())
+    _API.toggleCardVisibility()
+      .then((data) => {
+        dispatch(apiCardVisibilitySuccess(data.id, data.isVisible))
+      })
+      .catch((err) => {
+        console.log(err)
+        dispatch(apiCardVisibilityFailure(err))
+      })
   }
 }
 

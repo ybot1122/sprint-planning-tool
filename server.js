@@ -93,6 +93,20 @@ io.on('connect', (socket) => {
     }
   })
 
+  socket.on(apiEvents.EVENT_TOGGLE_CARD_VISIBILITY, (callback) => {
+    const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
+    const players = activeSessions[roomName].players
+    const ind = players.findIndex((el) => el.id === socket.id)
+    if (players[ind].isMod) {
+      activeSessions[roomName].showCards = !activeSessions[roomName].showCards;
+      callback(activeSessions[roomName].showCards)
+      console.log('updated card visibility for room : ' + roomName)
+      socket.broadcast.emit(apiEvents.EVENT_TOGGLE_CARD_VISIBILITY, activeSessions[roomName].showCards)
+    } else {
+      callback(null, 'callback failed because non moderator tried to toggle visibility')
+    }
+  })
+
   socket.on('disconnecting', (reason) => {
     const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
     if (roomName) {

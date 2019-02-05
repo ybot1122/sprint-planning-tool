@@ -2,11 +2,12 @@ import { connect } from 'react-redux'
 import { toggleShowCards } from '../actions/actions'
 
 const ModToolbar = (props) => {
-  const { bootstrap: { users, connection, localUser }, dispatch } = props;
+  const { bootstrap: { users, connection, localUser, showCards }, dispatch } = props;
+  const showCardsText = (showCards) ? 'Hide Cards' : 'Show Cards'
 
   return (
     <div className="toolbar">
-      <span onClick={() => dispatch(toggleShowCards())}>Show/Hide Cards</span>
+      <span onClick={() => dispatch(toggleShowCards(!showCards))}>{showCardsText}</span>
       <style jsx>{`
         .toolbar {
           text-align: center;

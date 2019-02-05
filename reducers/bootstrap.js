@@ -11,7 +11,7 @@ const initialState = {
   name: '(name)',
   userId: 0,
   currentScore: null,
-  showCard: false,
+  showCards: false,
   users: [],
 }
 
@@ -25,7 +25,7 @@ const bootstrap = (state = initialState, action) => {
       state.currentScore = action.score
       return Object.assign({}, state)
     case _ACTION.TOGGLE_SHOW_CARDS:
-      state.showCards = !state.showCards
+      state.showCards = action.isVisible
       return Object.assign({}, state)
     case _ACTION.UPDATE_NAME:
       state.name = action.name

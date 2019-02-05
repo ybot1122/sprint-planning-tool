@@ -1,5 +1,6 @@
 import openSocket from 'socket.io-client';
 import * as apiEvents from '../constants/apiConstants'
+import * as ACTION from '../constants/actionTypes'
 import { updateEverything } from '../actions/actions'
 
 const socketDomain = (process.env.NODE_ENV === 'development') 
@@ -23,6 +24,9 @@ export const openConnection = (name, roomName, dispatch) => {
 
   const apiPromise = new Promise((res, rej) => {
     socket = openSocket(socketDomain)
+    socket.on(apiEvents.EVENT_TOGGLE_CARD_VISIBILITY, (isVisible) => {
+      dispatch({ type: ACTION.TOGGLE_SHOW_CARDS, isVisible })
+    })
     socket.on('connect', () => {
       socket.emit(apiEvents.EVENT_NEW_PLAYER, name, roomName, (data, err) => {
         if (err) {
@@ -70,6 +74,25 @@ export const updateName = (name) => {
         rej(err)
       } else {
         res({ players, id: socket.id })
+      }
+    })
+  })
+
+  return apiPromise
+}
+
+export const toggleCardVisibility = () => {
+  if (socket == null) {
+    console.warn('tried to toggle cards visibility before opening connection')
+    return Promise.reject('tried to toggle cards visibility before opening connection')
+  }
+
+  const apiPromise = new Promise((res, rej) => {
+    socket.emit(apiEvents.EVENT_TOGGLE_CARD_VISIBILITY, (isVisible, err) => {
+      if (err) {
+        rej(err)
+      } else {
+        res({ isVisible, id: socket.id })
       }
     })
   })
