@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { HOME, ABOUT } from '../constants/routes';
 
 const links = [
-  { href: 'https://github.com/segmentio/create-next-app', label: 'Next.js Github' },
-  { href: 'https://github.com/ybot1122/sprint-planning-tool', label: 'Project Github' },
+  { href: 'https://github.com/ybot1122/sprint-planning-tool', label: 'Source Code' },
   { href: ABOUT, label: 'About' }
 ].map(link => {
   link.key = `nav-link-${link.href}-${link.label}`
@@ -40,7 +39,6 @@ const Nav = (props) => {
           font-family: -apple-system,BlinkMacSystemFont,Avenir Next,Avenir,Helvetica,sans-serif;
         }
         nav {
-          display: none;
           text-align: center;
         }
         ul {
