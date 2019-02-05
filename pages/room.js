@@ -19,9 +19,9 @@ class room extends React.Component {
   }
 
   render() {
-    const { bootstrap: { users, name } } = this.props
+    const { bootstrap: { users, name, userId } } = this.props
 
-    const isModerator = true
+    const isModerator = (users.find((u) => u.isMod) || {}).id === userId
     const teammateCards = users.map((el, ind) => <TeammateCard name={el.name} score={el.score} id={el.id} key={ind} />)
     return (
       <div>

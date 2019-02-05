@@ -9,17 +9,12 @@ import { apiOpenConnection } from '../actions/actions'
 const index = (props) => {
   const { bootstrap: { name, connection } } = props;
   const generatedRoomId = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
-  const onJoinCreateClick = () => {
-    if (!connection.isConnected && !connection.isLoading) {
-      props.openSocketConnection(name, generatedRoomId)
-    }
-  }
 
   return (
     <div>
       <div className="hero">
         <div className="frame">
-          <h1><Link href={ROOM + '/' + generatedRoomId}><span onClick={onJoinCreateClick}>Join Room</span></Link></h1>
+          <h1><Link href={ROOM + '/' + generatedRoomId}><span>Join Room</span></Link></h1>
         </div>
       </div>
 
