@@ -20,13 +20,14 @@ const TeammateCard = (props) => {
   } else if (score === COFFEE) {
     scoreDisplay = <img src="/static/coffee.png" style={{height: '20px'}} />
   }
-
+  const readyIndicator = (score) ? 'O' : null;
   return (
     <div className="teammate-card--outer">
       <div className="teammate-card--inner">
         {isLocalUser ? <h3><EditableName /></h3> : <h3>{name}</h3>}
         <h4 className={h4cname}>{scoreDisplay}</h4>
       </div>
+      <div className="teammate-card--ready">{readyIndicator}</div>
 
       <style jsx>{`
         .teammate-card--outer {
@@ -59,6 +60,12 @@ const TeammateCard = (props) => {
 
         h4.camo {
           color: #ABCAE9;
+        }
+
+        .teammate-card--ready {
+          position: absolute;
+          right: 5px;
+          color: green;
         }
       `}</style>
     </div>
