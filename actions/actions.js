@@ -184,3 +184,46 @@ export const apiUpdateName = (name) => {
       })
   }
 }
+
+// api reset scores
+export const resetScores = () => {
+  return (dispatch) => {
+    dispatch(apiResetScores())
+  }
+}
+
+export const apiResetScoresStart = () => {
+  return {
+    type: ACTION.API.RESET_SCORES.START,
+  }
+}
+
+export const apiResetScoresSuccess = (players, id) => {
+  return {
+    type: ACTION.API.RESET_SCORES.SUCCESS,
+    players,
+    id,
+  }
+}
+
+export const apiResetScoresFailure = (error) => {
+  return {
+    type: ACTION.API.RESET_SCORES.FAILURE,
+    error,
+  }
+}
+
+export const apiResetScores = () => {
+  return (dispatch) => {
+    dispatch(apiResetScoresStart())
+    _API.resetScores()
+      .then((data) => {
+        console.log(data)
+        dispatch(apiResetScoresSuccess(data.players, data.id))
+      })
+      .catch((err) => {
+        console.log(err)
+        dispatch(apiResetScoresFailure(err))
+      })
+  }
+}

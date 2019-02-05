@@ -87,7 +87,7 @@ io.on('connect', (socket) => {
       players[ind].name = name
       callback(players)
       console.log('updated name : ' + name)
-      socket.broadcast.emit(apiEvents.EVENT_REFRESH, players)
+      socket.to(roomName).emit(apiEvents.EVENT_REFRESH, players)
     } else {
       callback(null, 'callback failed because score must be valid')
     }
@@ -104,6 +104,20 @@ io.on('connect', (socket) => {
       socket.broadcast.emit(apiEvents.EVENT_TOGGLE_CARD_VISIBILITY, activeSessions[roomName].showCards)
     } else {
       callback(null, 'callback failed because non moderator tried to toggle visibility')
+    }
+  })
+
+  socket.on(apiEvents.EVENT_RESET, (callback) => {
+    const roomName = Object.keys(socket.rooms).find((roomName) => !!activeSessions[roomName])
+    const players = activeSessions[roomName].players
+    const ind = players.findIndex((el) => el.id === socket.id)
+    if (players[ind].isMod) {
+      activeSessions[roomName].players.forEach((p) => p.score = null)
+      callback(activeSessions[roomName].players)
+      console.log('reset all scores for room : ' + roomName)
+      socket.to(roomName).emit(apiEvents.EVENT_REFRESH, players)
+    } else {
+      callback(null, 'callback failed because non moderator tried to reset scores')
     }
   })
 

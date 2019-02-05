@@ -99,3 +99,22 @@ export const toggleCardVisibility = () => {
 
   return apiPromise
 }
+
+export const resetScores = () => {
+  if (socket == null) {
+    console.warn('tried to reset scores before opening connection')
+    return Promise.reject('tried to reset scores before opening connection')
+  }
+  const apiPromise = new Promise((res, rej) => {
+    console.log('emit')
+    socket.emit(apiEvents.EVENT_RESET, (players, err) => {
+      if (err) {
+        rej(err)
+      } else {
+        res({ players, id: socket.id })
+      }
+    })
+  })
+
+  return apiPromise
+}
