@@ -3,9 +3,7 @@ import * as apiEvents from '../constants/apiConstants'
 import * as ACTION from '../constants/actionTypes'
 import { updateEverything } from '../actions/actions'
 
-const socketDomain = (process.env.NODE_ENV === 'development') 
-  ? 'http://localhost:4200'
-  : 'http://ec2-34-217-210-176.us-west-2.compute.amazonaws.com:4200'
+const socketDomain = (typeof window !== 'undefined') ? 'http://' + window.location.hostname + ':4200' : ''
 
 let socket = null;
 
