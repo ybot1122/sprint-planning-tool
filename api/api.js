@@ -5,7 +5,7 @@ import { updateEverything } from '../actions/actions'
 
 const socketDomain = (process.env.NODE_ENV === 'development') 
   ? 'http://localhost:4200'
-  : 'http://ec2-34-215-12-183.us-west-2.compute.amazonaws.com:4200'
+  : 'http://ec2-34-217-210-176.us-west-2.compute.amazonaws.com:4200'
 
 let socket = null;
 
